@@ -1,0 +1,3 @@
+FROM mongo:4.0.9-xenial
+
+RUN apt update && apt install -y procps lsof

@@ -1,0 +1,14 @@
+FROM centos:7.6.1810
+
+RUN yum -y update less
+RUN echo $'[mongodb-org-4.0]\n\
+name=MongoDB Repository\n\
+baseurl=http://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/4.0/x86_64/\n\
+gpgcheck=0\n\
+enabled=1' > /etc/yum.repos.d/mongodb-org-4.0.repo
+
+RUN yum install -y mongodb-org-4.0.9 mongodb-org-server-4.0.9 mongodb-org-shell-4.0.9 mongodb-org-mongos-4.0.9 mongodb-org-tools-4.0.9
+
+RUN mkdir -p /data/db
+
+CMD ["mongod", "--auth"]

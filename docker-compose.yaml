@@ -1,0 +1,51 @@
+version: '3.5'
+
+# alias d=docker; alias d-c=docker-compose; d-c build && d-c down && d-c up -d &&    d exec -it my-mysql bash && d exec -it my-mongo bash && d exec -it my-mongo-centos bash
+
+services:
+  # https://hub.docker.com/_/mysql
+  my-mysql:
+    container_name: my-mysql
+    hostname: my-mysql
+    build:
+      context: .
+      dockerfile: Dockerfile-mysql
+    environment:
+      # mysql -h my-mysql -u root -pexample
+      MYSQL_ROOT_PASSWORD: ${ROOT_PASSWORD}
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_USER: app
+      MYSQL_PASSWORD: ${APP_PASSWORD}
+      MYSQL_DATABASE: my-app
+    ports:
+      - 3306:3306
+    #command: >
+    #  bash -c "tail -F /dev/null"
+  # https://hub.docker.com/_/mongo
+  my-mongo:
+    container_name: my-mongo
+    hostname: my-mongo
+    build:
+      context: .
+      dockerfile: Dockerfile-mongodb
+    environment:
+      # mongo --host localhost --authenticationDatabase admin -u root -p example
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: ${ROOT_PASSWORD}
+    ports:
+      - 27017:27017
+    #command: >
+    #  bash -c "tail -F /dev/null"
+  my-mongo-centos:
+    container_name: my-mongo-centos
+    hostname: my-mongo-centos
+    build:
+      context: .
+      dockerfile: Dockerfile-mongo-centos-custom
+    environment:
+      MONGO_ADMIN_USERNAME: root
+      MONGO_ADMIN_PASSWORD: ${ROOT_PASSWORD}
+    ports:
+      - 27001:27017
+    command: >
+      bash -c "tail -F /dev/null"
