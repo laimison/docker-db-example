@@ -1,6 +1,6 @@
 version: '3.5'
 
-# alias d=docker; alias d-c=docker-compose; d-c build && d-c down && d-c up -d &&    d exec -it my-mysql bash && d exec -it my-mongo bash && d exec -it my-mongo-centos bash
+# alias d=docker; alias d-c=docker-compose; mkdir -p mysql-data && d-c build && d-c down && d-c up -d &&    d exec -it my-mysql bash && d exec -it my-mongo bash && d exec -it my-mongo-centos bash
 
 services:
   # https://hub.docker.com/_/mysql
@@ -19,6 +19,8 @@ services:
       MYSQL_DATABASE: my-app
     ports:
       - 3306:3306
+    volumes:
+      - ./mysql-data:/var/lib/mysql
     #command: >
     #  bash -c "tail -F /dev/null"
   # https://hub.docker.com/_/mongo
