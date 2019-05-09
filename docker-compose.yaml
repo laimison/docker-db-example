@@ -1,6 +1,6 @@
 version: '3.5'
 
-# alias d=docker; alias d-c=docker-compose; mkdir -p mysql-data && d-c build && d-c down && d-c up -d &&    d exec -it my-mysql bash && d exec -it my-mongo bash && d exec -it my-mongo-centos bash
+# mkdir -p mysql-data && docker-compose build && docker-compose down && docker-compose up -d
 
 services:
   # https://hub.docker.com/_/mysql
